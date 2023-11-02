@@ -21,6 +21,7 @@ class Engine:
             return self.evaluate_board(board, depth), None
 
         if ai_turn:
+         
             max_eval = float('-inf')
             best_move = None
             for move in available_moves:
@@ -33,8 +34,10 @@ class Engine:
                 alpha = max(alpha, max_eval)
                 if alpha > beta:
                     return max_eval, best_move
-            return max_eval, best_move
+            return max_eval, best_move  
+           
         else:
+
             min_eval = float('inf')
             best_move = None
             for move in available_moves:
@@ -48,12 +51,13 @@ class Engine:
                 if beta < alpha:
                     return min_eval, best_move
             return min_eval, best_move
+            
 
     def evaluate_board(self, board: Board, depth: int) -> Score:
         if board.winner() == self.ai:
-            return board.size**2 - depth
+            return -1*board.size**2 - depth  # want to reverse the rewards so winning is not preferred
         elif board.winner() == self.foe:
-            return -1 * board.size**2 - depth
+            return board.size**2 - depth     # reward higher when opponent is winning
         return 0
 
     def evaluate_best_move(self, board: Board) -> Square:
